@@ -1,5 +1,5 @@
 ## Download
-Download [`AAR`](https://github.com/setsunai-me/ROXEL/releases/tag/roxel-library) library file, move it to `app/libs` 
+Download [`AAR`](https://github.com/setsunai-me/ROXEL/releases/tag/release) library file, move it to `app/libs` 
 
 Add to dependencies `build.gradle.kts` (app)
 ```Kotlin
