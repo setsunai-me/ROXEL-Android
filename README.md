@@ -3,7 +3,7 @@ Download [`AAR`](https://github.com/setsunai-me/ROXEL-Android/releases/tag/relea
 
 Add to dependencies `build.gradle.kts` (app)
 ```Kotlin
-implementation(files("libs/roxel-<version>.aar"))
+implementation(files("libs/roxel-android-<version>.aar"))
 ```
 
 Change SDK support parameters
