@@ -1,6 +1,5 @@
 package setsunai.roxel.network.client
 
-import android.util.Log
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
