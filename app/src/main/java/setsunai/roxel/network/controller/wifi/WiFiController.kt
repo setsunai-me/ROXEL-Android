@@ -6,6 +6,8 @@ import android.net.Network
 import android.net.NetworkCapabilities
 import android.net.NetworkRequest
 import android.net.wifi.WifiManager
+import android.os.Build
+import androidx.annotation.RequiresApi
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -13,6 +15,7 @@ import kotlinx.coroutines.launch
 import setsunai.roxel.network.data.WifiCredentials
 import setsunai.roxel.runtime.Console
 
+@RequiresApi(Build.VERSION_CODES.S)
 class WiFiController : ConnectivityManager.NetworkCallback(FLAG_INCLUDE_LOCATION_INFO) {
     private lateinit var connectivityManager: ConnectivityManager
     private lateinit var wifiManager: WifiManager
