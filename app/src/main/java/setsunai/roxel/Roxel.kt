@@ -278,4 +278,11 @@ class Roxel {
             selectedInstance = id
         }
     }
+
+    fun shutdown() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            network.shutdown()
+            wifi.shutdown()
+        }
+    }
 }

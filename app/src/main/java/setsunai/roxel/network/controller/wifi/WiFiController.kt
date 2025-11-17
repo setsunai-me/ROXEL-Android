@@ -12,6 +12,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
+import setsunai.roxel.network.controller.helper.SsidInvoke
 import setsunai.roxel.network.data.WifiCredentials
 import setsunai.roxel.runtime.Console
 
@@ -22,6 +23,7 @@ class WiFiController : ConnectivityManager.NetworkCallback(FLAG_INCLUDE_LOCATION
     private var credentials: WifiCredentials? = null
 
     val isConnected: MutableStateFlow<Boolean> = MutableStateFlow(false)
+    private var isRunning: Boolean = false
 
     fun launch(context: Context, credentials: WifiCredentials) {
         if (!this::connectivityManager.isInitialized) {
@@ -32,6 +34,19 @@ class WiFiController : ConnectivityManager.NetworkCallback(FLAG_INCLUDE_LOCATION
         }
         updateInternalCallback()
         relaunchIfNeeded(credentials)
+        isRunning = true
+    }
+
+    fun shutdown() {
+        if (isRunning) {
+            if (this::connectivityManager.isInitialized) {
+                try {
+                    connectivityManager.unregisterNetworkCallback(this@WiFiController)
+                } catch (_: Throwable) {
+                }
+            }
+            isRunning = false
+        }
     }
 
     private fun relaunchIfNeeded(credentials: WifiCredentials) {
@@ -109,7 +124,9 @@ class WiFiController : ConnectivityManager.NetworkCallback(FLAG_INCLUDE_LOCATION
 
     override fun onAvailable(network: Network) {
         super.onAvailable(network)
-        onConnected()
+        if (SsidInvoke.get() == credentials?.ssid && credentials?.ssid?.isEmpty() == false) {
+            onConnected()
+        }
     }
 
     override fun onLost(network: Network) {
