@@ -78,9 +78,13 @@ class NetworkController(
         }
     }
 
-    override fun onCleared() {
-        super.onCleared()
+    fun shutdown() {
         tcp.cancel()
         udp.cancel()
+    }
+
+    override fun onCleared() {
+        super.onCleared()
+        shutdown()
     }
 }
