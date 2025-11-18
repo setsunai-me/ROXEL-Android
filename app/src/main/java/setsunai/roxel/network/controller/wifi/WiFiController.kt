@@ -50,11 +50,9 @@ class WiFiController : ConnectivityManager.NetworkCallback(FLAG_INCLUDE_LOCATION
     }
 
     private fun relaunchIfNeeded(credentials: WifiCredentials) {
-        val isDifferentCredentials = this.credentials == null || this.credentials != credentials
-        if (!wifiManager.isWifiEnabled || isDifferentCredentials) {
-            if (isDifferentCredentials) {
-                setWifiEnabled(false)
-            }
+        if (this.credentials != credentials) {
+            this.credentials = credentials
+            setWifiEnabled(true)
             onDisconnect()
         }
     }
