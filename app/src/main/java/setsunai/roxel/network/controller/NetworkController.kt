@@ -79,6 +79,8 @@ class NetworkController(
     }
 
     fun shutdown() {
+        serverCredentials = null
+        selectedHash = -1
         tcp.cancel()
         udp.cancel()
     }
