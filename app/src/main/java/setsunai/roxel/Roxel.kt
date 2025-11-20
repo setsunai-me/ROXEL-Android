@@ -1,7 +1,5 @@
 package setsunai.roxel
 
-import android.os.Build
-import androidx.annotation.RequiresApi
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
@@ -164,9 +162,7 @@ class Roxel {
     }
 
     private val instances: MutableMap<String, Instance> = Collections.synchronizedMap(HashMap())
-    @RequiresApi(Build.VERSION_CODES.S)
     private val wifi: WiFiController = WiFiController()
-    @RequiresApi(Build.VERSION_CODES.S)
     private val network: NetworkController =
         NetworkController(wifi.isConnected, ::onIncomingData, ::onConnectionState)
     private val processor: DataProcessor = DataProcessor()
@@ -228,29 +224,25 @@ class Roxel {
         serializable: Serializable?
     ) {
         try {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-                network.transmit(
-                    hash,
-                    gson.toJson(
-                        RequestPayload(
-                            name = requestImpl.id,
-                            data = serializable ?: EmptyObject()
-                        )
+            network.transmit(
+                hash,
+                gson.toJson(
+                    RequestPayload(
+                        name = requestImpl.id,
+                        data = serializable ?: EmptyObject()
                     )
                 )
-            }
+            )
         } catch (_: Throwable) {
         }
     }
 
     private fun onEffectUpdate(hash: Long, effectImpl: EffectImpl, state: Int) {
         try {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-                network.transmit(
-                    hash,
-                    gson.toJson(EffectPayload(key = effectImpl.id, value = state))
-                )
-            }
+            network.transmit(
+                hash,
+                gson.toJson(EffectPayload(key = effectImpl.id, value = state))
+            )
         } catch (e: Throwable) {
             e.printStackTrace()
         }
@@ -267,22 +259,16 @@ class Roxel {
     }
 
     fun launch(id: String) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-            wifi.launch(activity, wifiCredentials)
-        }
+        wifi.launch(activity, wifiCredentials)
         if (selectedInstance != id) {
             instance = instances[id] ?: return
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-                network.launch(id, instance!!.credentials())
-            }
+            network.launch(id, instance!!.credentials())
             selectedInstance = id
         }
     }
 
     fun shutdown() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-            network.shutdown()
-            wifi.shutdown()
-        }
+        network.shutdown()
+        wifi.shutdown()
     }
 }

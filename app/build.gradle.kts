@@ -10,7 +10,7 @@ android {
 
     defaultConfig {
 //        applicationId = "setsunai.roxel"
-        minSdk = 28
+        minSdk = 31
         //noinspection OldTargetApi
 //        targetSdk = 35
 //        versionCode = 1
