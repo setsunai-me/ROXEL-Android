@@ -8,8 +8,7 @@ implementation(files("libs/roxel-android-<version>.aar"))
 
 Change SDK support parameters
 ```gradle
-minSdk = 28
-targetSdk = 35
+minSdk = 31
 ```
 
 Add dependencies data to `gradle/libs.versions.toml`
