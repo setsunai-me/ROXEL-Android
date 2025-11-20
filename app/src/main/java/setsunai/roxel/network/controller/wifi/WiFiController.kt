@@ -42,6 +42,7 @@ class WiFiController : ConnectivityManager.NetworkCallback(FLAG_INCLUDE_LOCATION
                 } catch (_: Throwable) {
                 }
             }
+            credentials = null
             isRunning = false
         }
     }
@@ -121,6 +122,8 @@ class WiFiController : ConnectivityManager.NetworkCallback(FLAG_INCLUDE_LOCATION
         super.onAvailable(network)
         if (SsidInvoke.get() == credentials?.ssid && credentials?.ssid?.isEmpty() == false) {
             onConnected()
+        } else {
+            onDisconnect()
         }
     }
 

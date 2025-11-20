@@ -268,6 +268,7 @@ class Roxel {
     }
 
     fun shutdown() {
+        selectedInstance = null
         network.shutdown()
         wifi.shutdown()
     }
